@@ -17,7 +17,7 @@ import twg2.template.codeTemplate.render.TemplateRenderBuilder;
  * @since 2014-12-28
  */
 public class GenerateArrayUtils {
-	private static String tmplDir = "src.twg2.collections.templates".replace('.', '/') + '/';
+	private static String tmplDir = "src.twg2.arrays.templates".replace('.', '/') + '/';
 	private static TemplateImports importsMapper = TemplateImports.emptyInst();
 	private static ArrayInfo.Default genericType = new ArrayInfo.Default(true, "<T>", ".equals", false, "null");
 	private static List<ArrayInfo.Default> aryTypes;

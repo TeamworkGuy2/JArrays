@@ -3,6 +3,7 @@ package twg2.arrays.test;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import twg2.arrays.ArrayUtil;
@@ -37,7 +38,7 @@ public final class ArrayTests {
 
 
 	@Test
-	public final void testArraySums() {
+	public final void arraySumsTest() {
 		Float[] fSumExpect = new Float[] { 10.9f, 1.5f, 0f, 0f };
 		Integer[] iSumExpect = new Integer[] { 11, 30, 0, 0 };
 
@@ -47,7 +48,7 @@ public final class ArrayTests {
 
 
 	@Test
-	public final void testArrayAvg() {
+	public final void arrayAvgTest() {
 		Float[] fSumExpect = new Float[] { 3.6333333f, 0.5f, 0f, Float.NaN };
 		Float[] iSumExpect = new Float[] { 3.6666667f, 10f, 0f, Float.NaN };
 
@@ -57,7 +58,26 @@ public final class ArrayTests {
 
 
 	@Test
-	public void testPrimitiveToWrapper() {
+	public void concatTest() {
+		int[] res1 = ArrayUtil.concat(new int[] { 0 }, new int[] { 1, 1 }, new int[] { 2, 3, 5});
+		Assert.assertArrayEquals(new int[] { 0, 1, 1, 2, 3, 5 }, res1);
+
+		int[] res2 = ArrayUtil.concat(new int[] { 0, 2 }, new int[] { 1, 3 });
+		Assert.assertArrayEquals(new int[] { 0, 2, 1, 3 }, res2);
+
+		int[] res3 = ArrayUtil.concat(new int[] { }, new int[] { 1 }, 1/*dst off*/, 4/*dst len*/);
+		Assert.assertArrayEquals(new int[] { 0, 1, 0, 0 }, res3);
+
+		int[] res4 = ArrayUtil.concat(new int[] { 1, 0 }, 0, 1, new int[] { 1, 2, 3, 4 }, 1, 2, 1/*dst off*/, 4/*dst len*/);
+		Assert.assertArrayEquals(new int[] { 0, 1, 2, 3 }, res4);
+
+		int[] res5 = ArrayUtil.concat(new int[] { 1, 0 }, 0, 1, new int[] { 1, 2, 3, 4 }, 1, 2, new int[3], 0/*dst off*/);
+		Assert.assertArrayEquals(new int[] { 1, 2, 3 }, res5);
+	}
+
+
+	@Test
+	public void primitiveToWrapperTest() {
 		int[][] inputs = {
 				{ 1, 2, 3, 4, 5 },
 				{ 5, 10 },
@@ -87,7 +107,7 @@ public final class ArrayTests {
 
 
 	@Test
-	public void testGenericEquals() {
+	public void genericEqualsTest() {
 		List<ArraysOffsetData<int[]>> inputs = Arrays.asList(
 				new ArraysOffsetData<>(new int[] { 1, 2, 3 }, 0, new int[] { 1, 2, 3 }, 0, 2),
 				new ArraysOffsetData<>(new int[] { 1, 2, 3 }, 0, new int[] { 1, 2 }, 0, 2),
@@ -99,6 +119,16 @@ public final class ArrayTests {
 		List<Boolean> expected = Arrays.asList(true, true, true, false, false, true);
 
 		CheckTask.assertTests(inputs, expected, (data, idx) -> ArrayUtil.Generic.equals(data.ary1, data.off1, data.ary2, data.off2, data.len));
+	}
+
+
+	@Test
+	public void mapTest() {
+		Integer[] res1 = ArrayUtil.map(new Integer[] { 0, 1, 2, 3 }, (i) -> i * 2);
+		Assert.assertArrayEquals(new Integer[] { 0, 2, 4, 6 }, res1);
+
+		String[] res2 = ArrayUtil.map(new String[] { "a", "b", "z" }, (s) -> s.toUpperCase());
+		Assert.assertArrayEquals(new String[] { "A", "B", "Z" }, res2);
 	}
 
 }

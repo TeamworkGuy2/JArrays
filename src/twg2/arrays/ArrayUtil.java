@@ -1,6 +1,8 @@
 package twg2.arrays;
 
 import java.util.Arrays;
+import java.lang.reflect.Array;
+import java.util.function.Function;
 
 /** Methods for finding the index of a value in an array of values, concat arrays
  * together, reverse an array of values, and calculate the sum, average,
@@ -3565,6 +3567,32 @@ public final class ArrayUtil {
 		}
 	}
 	// end XOR
+
+
+	/** Convert an array using a mapping function and store the resulting values
+	 * @see #map(Object[], int, int, Function, Object[], int)
+	 */
+	@SuppressWarnings("unchecked")
+	public static final <E, R> R[] map(E[] srcAry, Function<E, R> transformer) {
+		int size = srcAry.length;
+		return map(srcAry, 0, size, transformer, (R[])Array.newInstance(srcAry.getClass().getComponentType(), size), 0);
+	}
+
+
+	/** Convert an array using a mapping function and store the resulting values
+	 * in a given destination array
+	 * @param srcAry the input array to convert
+	 * @param transformer the function to transform the input array values
+	 * @param dst the destination array to store the transformed values in
+	 * @return the input {@code dst} array filled with the transformed values
+	 */
+	public static final <E, R> R[] map(E[] srcAry, int srcOff, int srcLen, Function<E, R> transformer, R[] dst, int dstOff) {
+		for(int i = 0; i < srcLen; i++) {
+			R elem = transformer.apply(srcAry[srcOff + i]);
+			dst[dstOff + i] = elem;
+		}
+		return dst;
+	}
 
 
 	public static final <T> T[] emptyArray() {
