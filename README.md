@@ -1,6 +1,6 @@
 JArrayUtil
 ==============
-version: 0.1.1
+version: 0.1.2
 
 Array utilities - for everything! Most functions include offset and length arguments to apply the operation to a sub-array:
 * Equality: equals(), indexOf(), lastIndexOf(), contains()

@@ -124,10 +124,10 @@ public final class ArrayTests {
 
 	@Test
 	public void mapTest() {
-		Integer[] res1 = ArrayUtil.map(new Integer[] { 0, 1, 2, 3 }, (i) -> i * 2);
-		Assert.assertArrayEquals(new Integer[] { 0, 2, 4, 6 }, res1);
+		String[] res1 = ArrayUtil.map(new Integer[] { 0, 1, 2, 3 }, String.class, (i) -> "+" + (i * 2));
+		Assert.assertArrayEquals(new String[] { "+0", "+2", "+4", "+6" }, res1);
 
-		String[] res2 = ArrayUtil.map(new String[] { "a", "b", "z" }, (s) -> s.toUpperCase());
+		String[] res2 = ArrayUtil.map(new String[] { "a", "b", "z" }, String.class, (s) -> s.toUpperCase());
 		Assert.assertArrayEquals(new String[] { "A", "B", "Z" }, res2);
 	}
 

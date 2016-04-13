@@ -1,5 +1,5 @@
 {
-	"version" : "0.1.1",
+	"version" : "0.1.2",
 	"name" : "jarray-util",
 	"description" : "Array utilities for everything! Indexes, add, remove, concat, equals, reverse, expand, min, max, sum, and more",
 	"homepage" : "https://github.com/TeamworkGuy2/JArrays",

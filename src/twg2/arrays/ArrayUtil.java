@@ -3569,13 +3569,21 @@ public final class ArrayUtil {
 	// end XOR
 
 
-	/** Convert an array using a mapping function and store the resulting values
+	/** Convert an array using a mapping function and store the resulting values.
+	 * NOTE: Please provide the most specific 'dstCls' component type possible, else you will get a class cast exception at runtime if you try to cast/assign the array to a more specific type
+	 * @param dstCls the component type of the destination array to create, this is '? super R' bound to support generics.  You can provide a concrete component type and get back an array of
+	 * genericized component types based on the return type of the 'transformer' function.  To avoid runtime class cast exceptions, provide the most specific type you'll be accessing the array as.
 	 * @see #map(Object[], int, int, Function, Object[], int)
 	 */
 	@SuppressWarnings("unchecked")
-	public static final <E, R> R[] map(E[] srcAry, Function<E, R> transformer) {
+	public static final <E, R> R[] map(E[] srcAry, Class<? super R> dstCls, Function<E, R> transformer) {
 		int size = srcAry.length;
-		return map(srcAry, 0, size, transformer, (R[])Array.newInstance(srcAry.getClass().getComponentType(), size), 0);
+		return map(srcAry, 0, size, transformer, (R[])Array.newInstance(dstCls, size), 0);
+	}
+
+
+	public static final <E, R> R[] map(E[] srcAry, Function<E, R> transformer, R[] dst) {
+		return map(srcAry, 0, srcAry.length, transformer, dst, 0);
 	}
 
 
