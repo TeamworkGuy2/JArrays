@@ -1,0 +1,176 @@
+TArrayManager(var) ::= <<
+package $var.packageName$;
+
+/**
+ * @author TeamworkGuy2
+ * @since 2015-9-10
+ */
+@javax.annotation.Generated("StringTemplate")
+public final class $var.className$ {
+
+$var.types:{ary |
+$if(!ary.isGeneric)$
+
+	public static final class $ary.typeShortTitleCase$ {
+		public int size;
+		public $ary.type$[] data;
+	\}
+
+$endif$}$
+
+$var.types:{ary |
+
+	// ==== $ary.baseType$ array manager functions ====
+
+	/** Remove the element at the specified index from the array<br>
+	 * Collection Reminder:
+	 * <ul>
+	 * <li>increment action count</li>
+	 * <li>decrement size</li>
+	 * </ul>
+	 * @param index the index between {@code [0, size - 1]\} to remove
+	 * @return the element found at the specified index
+	 */
+	public static $ary.genericSignature$ $ary.type$ removeUnordered($ary.type$[] data, int size, int index) {
+		//if(index >= size) {
+		//	throw new ArrayIndexOutOfBoundsException(index + " of [0, " + size + "]");
+		//\}
+		// Get the item to remove
+		$ary.type$ item = data[index];
+		// Replace the item to remove with the last element from our array
+		data[index] = data[size - 1];
+		// Set the last element to null
+		data[size - 1] = $ary.defaultValue$;
+		return item;
+	\}
+
+
+	/** Remove the char at the specified index<br>
+	 * Collection Reminder:
+	 * <ul>
+	 * </ul>
+	 * @param index the index between {@code [0, size - 1]\} to remove
+	 * @return the char found at the specified index
+	 * @throws ArrayIndexOutOfBoundsException if the index is outside the range {@code [0, size - 1]\}
+	 */
+	public static $ary.genericSignature$ $ary.type$ removeIndex($ary.type$[] data, int size, int index) {
+		//if(index < 0 || index >= size) {
+		//	throw new ArrayIndexOutOfBoundsException(index + " of [0, " + size + ")");
+		//\}
+		// Shift all elements above the remove element to fill the empty index
+		// Get the item to remove
+		$ary.type$ item = data[index];
+
+		removeRange(data, size, index, 1);
+
+		return item;
+	\}
+
+
+	/** Remove the element at the specified index from the array<br>
+	 * Collection Reminder:
+	 * <ul>
+	 * <li>increment action count</li>
+	 * <li>size minus len</li>
+	 * </ul>
+	 */
+	public static $ary.genericSignature$ void removeRange($ary.type$[] data, int size, int off, int len) {
+		//if(off < 0 || off + len > size) {
+		//	throw new ArrayIndexOutOfBoundsException((off < 0 ? off : off + len) + " of [0, " + size + ")");
+		//\}
+		// Shift all elements above the remove element to fill the empty index
+		// Copy down the remaining upper half of the array if the item removed was not the last item in the array
+		if(off + len < size) {
+			System.arraycopy(data, off + len, data, off, size - (off + len));
+		\}
+	\}
+
+
+	/** Remove the specified object from the array<br>
+	 * Collection Reminder:
+	 * <ul>
+	 * </ul>
+	 * @param item the object to remove based on item.equals(get(i)) if item
+	 * is not null, or get(i)==null if item is null, where i is [0, size()-1]
+	 * @return true if the element was removed successfully, false otherwise
+	 */
+	public static $ary.genericSignature$ boolean removeValue($ary.type$[] data, int size, $ary.type$ item) {
+		// Search for the item to remove
+$if(ary.isGeneric)$
+		if(item != null) {
+			for(int i = 0; i < size; i++) {
+				// If the item is found, remove it
+				if(item.equals(data[i])) {
+					removeIndex(data, size, i);
+					return true;
+				\}
+			\}
+		\}
+		// Else if the item is null, search for a null item in our list
+		else {
+			for(int i = 0; i < size; i++) {
+				// If the item is found, remove it
+				if(data[i] == null) {
+					removeIndex(data, size, i);
+					return true;
+				\}
+			\}
+		\}
+$else$
+		for(int i = 0; i < size; i++) {
+			// If the item is found, remove it
+			if(item == data[i]) {
+				removeIndex(data, size, i);
+				return true;
+			\}
+		\}
+$endif$
+		return false;
+	\}
+
+
+	/** Add the specified item to the array<br>
+	 * Collection Reminder:
+	 * <ul>
+	 * <li>increment action count</li>
+	 * <li>increment size</li>
+	 * </ul>
+	 * @param item the item to add to the array
+	 */
+	public static $ary.genericSignature$ $ary.type$[] add($ary.type$[] data, int size, $ary.type$ item) {
+		// If the array is to small, expand it
+		if(size + 1 > data.length) {
+			data = expand(data);
+		\}
+		// Add the new item
+		data[size] = item;
+		return data;
+	\}
+
+
+	/** Designed for use by code that manages arrays by hand.
+	 * Note: expands array ~1.5x it's current size
+	 */
+	$if(ary.isGeneric)$@SuppressWarnings("unchecked")$endif$
+	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$[] expand($ary.type$[] oldAry) {
+		// Expand array size 1.5x + 4, +4 instead of +1 to prevent small arrays from constantly needed to resize
+		$if(ary.isGeneric)$Object$else$$ary.type$$endif$[] newAry = new $if(ary.isGeneric)$Object$else$$ary.type$$endif$[oldAry.length + (oldAry.length >\>> 1) + 4];
+		System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);
+		return $if(ary.isGeneric)$($ary.type$[])$endif$newAry;
+	\}
+
+
+	/** Designed for use by code that manages arrays by hand
+	 * Note: expands array ~1.5x it's current size, up to a maximum of {@code maxSize\}
+	 */
+	$if(ary.isGeneric)$@SuppressWarnings("unchecked")$endif$
+	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$[] expand($ary.type$[] oldAry, int maxSize) {
+		// Expand array size 1.5x + 4, +4 instead of +1 to prevent small arrays from constantly needed to resize
+		int newSize = Math.max(maxSize, oldAry.length + (oldAry.length >\>> 1) + 4);
+		$if(ary.isGeneric)$Object$else$$ary.type$$endif$[] newAry = new $if(ary.isGeneric)$Object$else$$ary.type$$endif$[newSize];
+		System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);
+		return $if(ary.isGeneric)$($ary.type$[])$endif$newAry;
+	\}
+
+}$\}
+>>
