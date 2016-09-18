@@ -1,10 +1,10 @@
 {
-	"version" : "0.2.0",
-	"name" : "jarray-util",
+	"version" : "0.2.1",
+	"name" : "jarrays",
 	"description" : "Array utilities for everything! Indexes, add, remove, concat, equals, reverse, expand, min, max, sum, and more",
 	"homepage" : "https://github.com/TeamworkGuy2/JArrays",
 	"license" : "MIT",
-	"main" : "./jar/jarray_util.jar",
+	"main" : "./bin/jarrays.jar",
 	"dependencies" : {
 	}
 }

@@ -1,8 +1,8 @@
-JArrayUtil
+JArrays
 ==============
-version: 0.2.0
+version: 0.2.1
 
-Array utilities - for everything! Most functions include offset and length arguments to apply the operation to a sub-array:
+Array utilities for everything! Most functions include offset and length arguments to apply the operation to a sub-array:
 * Equality: equals(), indexOf(), lastIndexOf(), contains()
 * Add & Remove: add(), addRange(), remove(), concat()
 * Conversion: asArray(...), reverse(), expandArray(), toString()

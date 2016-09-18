@@ -227,8 +227,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(boolean[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final boolean[] reverse(boolean[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -239,14 +239,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(boolean[] ary, int offset, int length) {
+	public static final boolean[] reverse(boolean[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			boolean temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			boolean temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -532,8 +533,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(byte[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final byte[] reverse(byte[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -544,14 +545,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(byte[] ary, int offset, int length) {
+	public static final byte[] reverse(byte[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			byte temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			byte temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -688,7 +690,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Byte#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final byte min(byte[] values) {
 		return min(values, 0, values.length);
@@ -699,7 +701,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Byte#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final byte min(byte[] values, int offset, int length) {
 		byte min = Byte.MAX_VALUE;
@@ -713,7 +715,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Byte#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final byte max(byte[] values) {
 		return max(values, 0, values.length);
@@ -724,7 +726,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Byte#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final byte max(byte[] values, int offset, int length) {
 		byte max = Byte.MIN_VALUE;
@@ -938,8 +940,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(short[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final short[] reverse(short[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -950,14 +952,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(short[] ary, int offset, int length) {
+	public static final short[] reverse(short[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			short temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			short temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -1094,7 +1097,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Short#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final short min(short[] values) {
 		return min(values, 0, values.length);
@@ -1105,7 +1108,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Short#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final short min(short[] values, int offset, int length) {
 		short min = Short.MAX_VALUE;
@@ -1119,7 +1122,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Short#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final short max(short[] values) {
 		return max(values, 0, values.length);
@@ -1130,7 +1133,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Short#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final short max(short[] values, int offset, int length) {
 		short max = Short.MIN_VALUE;
@@ -1344,8 +1347,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(char[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final char[] reverse(char[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -1356,14 +1359,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(char[] ary, int offset, int length) {
+	public static final char[] reverse(char[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			char temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			char temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -1500,7 +1504,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Character#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final char min(char[] values) {
 		return min(values, 0, values.length);
@@ -1511,7 +1515,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Character#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final char min(char[] values, int offset, int length) {
 		char min = Character.MAX_VALUE;
@@ -1525,7 +1529,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Character#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final char max(char[] values) {
 		return max(values, 0, values.length);
@@ -1536,7 +1540,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Character#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final char max(char[] values, int offset, int length) {
 		char max = Character.MIN_VALUE;
@@ -1750,8 +1754,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(int[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final int[] reverse(int[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -1762,14 +1766,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(int[] ary, int offset, int length) {
+	public static final int[] reverse(int[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			int temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			int temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -1906,7 +1911,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Integer#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final int min(int[] values) {
 		return min(values, 0, values.length);
@@ -1917,7 +1922,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Integer#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final int min(int[] values, int offset, int length) {
 		int min = Integer.MAX_VALUE;
@@ -1931,7 +1936,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Integer#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final int max(int[] values) {
 		return max(values, 0, values.length);
@@ -1942,7 +1947,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Integer#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final int max(int[] values, int offset, int length) {
 		int max = Integer.MIN_VALUE;
@@ -2156,8 +2161,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(long[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final long[] reverse(long[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -2168,14 +2173,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(long[] ary, int offset, int length) {
+	public static final long[] reverse(long[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			long temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			long temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -2312,7 +2318,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Long#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final long min(long[] values) {
 		return min(values, 0, values.length);
@@ -2323,7 +2329,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Long#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final long min(long[] values, int offset, int length) {
 		long min = Long.MAX_VALUE;
@@ -2337,7 +2343,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Long#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final long max(long[] values) {
 		return max(values, 0, values.length);
@@ -2348,7 +2354,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Long#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final long max(long[] values, int offset, int length) {
 		long max = Long.MIN_VALUE;
@@ -2562,8 +2568,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(float[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final float[] reverse(float[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -2574,14 +2580,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(float[] ary, int offset, int length) {
+	public static final float[] reverse(float[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			float temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			float temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -2718,7 +2725,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Float#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final float min(float[] values) {
 		return min(values, 0, values.length);
@@ -2729,7 +2736,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Float#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final float min(float[] values, int offset, int length) {
 		float min = Float.MAX_VALUE;
@@ -2743,7 +2750,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Float#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final float max(float[] values) {
 		return max(values, 0, values.length);
@@ -2754,7 +2761,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Float#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final float max(float[] values, int offset, int length) {
 		float max = Float.MIN_VALUE;
@@ -2968,8 +2975,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final void reverse(double[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final double[] reverse(double[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -2980,14 +2987,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final void reverse(double[] ary, int offset, int length) {
+	public static final double[] reverse(double[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			double temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			double temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 
@@ -3124,7 +3132,7 @@ public final class ArrayUtil {
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Double#MAX_VALUE} if the array is empty (0 length)
 	 */
 	public static final double min(double[] values) {
 		return min(values, 0, values.length);
@@ -3135,7 +3143,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Double#MAX_VALUE} if {@code length == 0}
 	 */
 	public static final double min(double[] values, int offset, int length) {
 		double min = Double.MAX_VALUE;
@@ -3149,7 +3157,7 @@ public final class ArrayUtil {
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Double#MIN_VALUE} if the array is empty (0 length)
 	 */
 	public static final double max(double[] values) {
 		return max(values, 0, values.length);
@@ -3160,7 +3168,7 @@ public final class ArrayUtil {
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link Double#MIN_VALUE} if the {@code length == 0}
 	 */
 	public static final double max(double[] values, int offset, int length) {
 		double max = Double.MIN_VALUE;
@@ -3396,8 +3404,8 @@ public final class ArrayUtil {
 	 * For example {@code ary=[0, 1, 2, 3]}, the result would be {@code ary=[3, 2, 1, 0]}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final <T> void reverse(T[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final <T> T[] reverse(T[] ary) {
+		return reverse(ary, 0, ary.length);
 	}
 
 
@@ -3408,14 +3416,15 @@ public final class ArrayUtil {
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final <T> void reverse(T[] ary, int offset, int length) {
+	public static final <T> T[] reverse(T[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			T temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			T temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		}
+		return ary;
 	}
 
 

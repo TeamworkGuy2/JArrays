@@ -255,8 +255,8 @@ $endif$	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ar
 	 * For example {@code ary=[0, 1, 2, 3]\}, the result would be {@code ary=[3, 2, 1, 0]\}.
 	 * @param ary the array to reverse a portion of
 	 */
-	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$void reverse($ary.type$[] ary) {
-		reverse(ary, 0, ary.length);
+	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$[] reverse($ary.type$[] ary) {
+		return reverse(ary, 0, ary.length);
 	\}
 
 
@@ -267,14 +267,15 @@ $endif$	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ar
 	 * @param offset the offset into the array at which to begin reversing the order of elements
 	 * @param length the number of elements to reverse
 	 */
-	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$void reverse($ary.type$[] ary, int offset, int length) {
+	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$[] reverse($ary.type$[] ary, int offset, int length) {
 		final int len = length/2;
 		for(int i = 0; i < len; i++) {
-			$ary.type$ temp = ary[i];
-			int index = length - i - 1;
-			ary[i] = ary[index];
-			ary[index] = temp;
+			$ary.type$ temp = ary[offset + i];
+			int i2 = offset + length - i - 1;
+			ary[offset + i] = ary[i2];
+			ary[i2] = temp;
 		\}
+		return ary;
 	\}
 
 
@@ -414,7 +415,7 @@ $if(ary.isAggregatable)$
 
 	/** Get the minimum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link $ary.objectType$#MAX_VALUE\} if the array is empty (0 length)
 	 */
 	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$ min($ary.type$[] values) {
 		return min(values, 0, values.length);
@@ -425,7 +426,7 @@ $if(ary.isAggregatable)$
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link $ary.objectType$#MAX_VALUE\} if {@code length == 0\}
 	 */
 	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$ min($ary.type$[] values, int offset, int length) {
 		$ary.type$ min = $ary.maxValue$;
@@ -439,7 +440,7 @@ $if(ary.isAggregatable)$
 
 	/** Get the maximum value in an array subset
 	 * @param values the array to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link $ary.objectType$#MIN_VALUE\} if the array is empty (0 length)
 	 */
 	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$ max($ary.type$[] values) {
 		return max(values, 0, values.length);
@@ -450,7 +451,7 @@ $if(ary.isAggregatable)$
 	 * @param values the array to search
 	 * @param offset the offset into the array at which to start searching
 	 * @param length the number of values to search
-	 * @return the minimum value found in the array subset specified
+	 * @return the minimum value found in the array subset specified or {@link $ary.objectType$#MIN_VALUE\} if the {@code length == 0\}
 	 */
 	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$ max($ary.type$[] values, int offset, int length) {
 		$ary.type$ max = $ary.minValue$;
