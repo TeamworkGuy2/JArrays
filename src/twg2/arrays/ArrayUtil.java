@@ -1,6 +1,10 @@
 package twg2.arrays;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.RandomAccess;
 import java.lang.reflect.Array;
 import java.util.function.Function;
 
@@ -3576,6 +3580,50 @@ public final class ArrayUtil {
 		}
 	}
 	// end XOR
+
+
+	/** Create an array of values from an {@link Iterable} based on the
+	 * class type of the first element in the collection
+	 * @param iter the collection of values to convert to an array
+	 * @return a newly constructed array of all the values from the iterable
+	 * @see twg2.collections.builder.ListUtil#toArray(Iterable)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <E> E[] asArray(Iterable<E> iter) {
+		E[] ary = null;
+		if(iter instanceof List && iter instanceof RandomAccess) {
+			List<E> list = (List<E>)iter;
+			int size = list.size();
+			if(size > 0) {
+				ary = (E[])Array.newInstance(list.get(0).getClass(), size);
+			}
+			for(int i = 0; i < size; i++) {
+				ary[i] = list.get(i);
+			}
+		}
+		else if(iter instanceof Collection) {
+			Collection<E> coll = (Collection<E>)iter;
+			int i = 0;
+			for(E elem : coll) {
+				if(i == 0) {
+					ary = (E[])Array.newInstance(elem.getClass(), coll.size());
+				}
+				ary[i] = elem;
+				i++;
+			}
+		}
+		else {
+			ArrayList<E> listCopy = new ArrayList<E>();
+			for(E elem : iter) {
+				listCopy.add(elem);
+			}
+			int size = listCopy.size();
+			if(size > 0) {
+				ary = listCopy.toArray((E[])Array.newInstance(listCopy.get(0).getClass(), size));
+			}
+		}
+		return ary;
+	}
 
 
 	/** Convert an array using a mapping function and store the resulting values.

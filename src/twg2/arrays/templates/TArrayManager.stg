@@ -1,6 +1,8 @@
 TArrayManager(var) ::= <<
 package $var.packageName$;
 
+import java.util.Arrays;
+
 /**
  * @author TeamworkGuy2
  * @since 2015-9-10
@@ -222,9 +224,9 @@ $endif$
 	$if(ary.isGeneric)$@SuppressWarnings("unchecked")$endif$
 	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$[] expand($ary.type$[] oldAry) {
 		// Expand array size 1.5x + 4, +4 to prevent small arrays from constantly needing to resize
-		$if(ary.isGeneric)$Object$else$$ary.type$$endif$[] newAry = new $if(ary.isGeneric)$Object$else$$ary.type$$endif$[oldAry.length + (oldAry.length >\>> 1) + 4];
-		System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);
-		return $if(ary.isGeneric)$($ary.type$[])$endif$newAry;
+		$ary.type$[] newAry = $if(ary.isGeneric)$($ary.type$[]) Arrays.copyOf(oldAry, oldAry.length + (oldAry.length >\>> 1) + 4, oldAry.getClass());$else$new $ary.type$[oldAry.length + (oldAry.length >\>> 1) + 4];$endif$
+		$if(ary.isGeneric)$$else$System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);$endif$
+		return newAry;
 	\}
 
 
@@ -235,9 +237,9 @@ $endif$
 	public static final $if(ary.isGeneric)$$ary.genericSignature$ $endif$$ary.type$[] expand($ary.type$[] oldAry, int maxSize) {
 		// Expand array size 1.5x + 4, +4 to prevent small arrays from constantly needing to resize
 		int newSize = Math.max(maxSize, oldAry.length + (oldAry.length >\>> 1) + 4);
-		$if(ary.isGeneric)$Object$else$$ary.type$$endif$[] newAry = new $if(ary.isGeneric)$Object$else$$ary.type$$endif$[newSize];
-		System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);
-		return $if(ary.isGeneric)$($ary.type$[])$endif$newAry;
+		$ary.type$[] newAry = $if(ary.isGeneric)$($ary.type$[]) Arrays.copyOf(oldAry, newSize, oldAry.getClass());$else$new $ary.type$[newSize];$endif$
+		$if(ary.isGeneric)$$else$System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);$endif$
+		return newAry;
 	\}
 
 }$\}

@@ -4,7 +4,16 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.3.0](N/A) - 2019-03-29
+### [0.3.1](N/A) - 2019-12-10
+#### Added
+* `ArrayUtil.asList(Iterator)`
+
+#### Fixed
+* `ArrayManager.expand(T[])` returning `Object[]` array instead of `T[]`
+
+
+--------
+### [0.3.0](https://github.com/TeamworkGuy2/JArrays/commit/8327d1777aa8fde3a8973021a20a6fe45b1a6359) - 2019-03-29
 #### Added
 * `ArrayManager.addAll()` and `clearAndAddAll()`
 * Improved documentation

@@ -1,5 +1,7 @@
 package twg2.arrays;
 
+import java.util.Arrays;
+
 /**
  * @author TeamworkGuy2
  * @since 2015-9-10
@@ -1841,9 +1843,8 @@ public final class ArrayManager {
 	@SuppressWarnings("unchecked")
 	public static final <T> T[] expand(T[] oldAry) {
 		// Expand array size 1.5x + 4, +4 to prevent small arrays from constantly needing to resize
-		Object[] newAry = new Object[oldAry.length + (oldAry.length >>> 1) + 4];
-		System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);
-		return (T[])newAry;
+		T[] newAry = (T[]) Arrays.copyOf(oldAry, oldAry.length + (oldAry.length >>> 1) + 4, oldAry.getClass());
+		return newAry;
 	}
 
 
@@ -1854,9 +1855,8 @@ public final class ArrayManager {
 	public static final <T> T[] expand(T[] oldAry, int maxSize) {
 		// Expand array size 1.5x + 4, +4 to prevent small arrays from constantly needing to resize
 		int newSize = Math.max(maxSize, oldAry.length + (oldAry.length >>> 1) + 4);
-		Object[] newAry = new Object[newSize];
-		System.arraycopy(oldAry, 0, newAry, 0, oldAry.length);
-		return (T[])newAry;
+		T[] newAry = (T[]) Arrays.copyOf(oldAry, newSize, oldAry.getClass());
+		return newAry;
 	}
 
 }

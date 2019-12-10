@@ -1,7 +1,9 @@
 package twg2.arrays.test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,9 +15,9 @@ import twg2.junitassist.checks.CheckTask;
  * @author TeamworkGuy2
  * @since 2014-12-6
  */
-public final class ArrayUtilTests {
+public class ArrayUtilTests {
 
-	public static final class SubArrays<T> {
+	public static class SubArrays<T> {
 		T ary1;
 		int off1;
 		T ary2;
@@ -74,6 +76,18 @@ public final class ArrayUtilTests {
 
 
 	@Test
+	public void asArrayIterableTest() {
+		Boolean[] ary = new Boolean[] { Boolean.TRUE, Boolean.FALSE };
+		Assert.assertArrayEquals(null, ArrayUtil.asArray(list(new Boolean[0])));
+		Assert.assertArrayEquals(null, ArrayUtil.asArray(coll(new Boolean[0])));
+		Assert.assertArrayEquals(null, ArrayUtil.asArray(iter(new Boolean[0])));
+		Assert.assertArrayEquals(ary, ArrayUtil.asArray(list(ary)));
+		Assert.assertArrayEquals(ary, ArrayUtil.asArray(coll(ary)));
+		Assert.assertArrayEquals(ary, ArrayUtil.asArray(iter(ary)));
+	}
+
+
+	@Test
 	public void avgTest() {
 		Float[] fAvgExpect = new Float[] { 3.6333333f, 0.5f, 0f, Float.NaN };
 		Float[] iAvgExpect = new Float[] { 3.6666667f, 10f, 0f, Float.NaN };
@@ -126,7 +140,7 @@ public final class ArrayUtilTests {
 
 	@Test
 	public void genericEqualsTest() {
-		List<SubArrays<int[]>> inputs = Arrays.asList(
+		List<SubArrays<int[]>> inputs = list(
 				new SubArrays<>(ints(1, 2, 3), 0, ints(1, 2, 3), 0, 2),
 				new SubArrays<>(ints(1, 2, 3), 0, ints(1, 2), 0, 2),
 				new SubArrays<>(ints(1, 2, 3), 2, ints(1, 2), 2, 0),
@@ -134,7 +148,7 @@ public final class ArrayUtilTests {
 				new SubArrays<>(ints(1, 2, 3), 2, ints(5, 5), 1, 1),
 				new SubArrays<>(ints(1, 2, 3), 1, ints(0, 1, 2, 3, 4), 2, 2)
 		);
-		List<Boolean> expected = Arrays.asList(true, true, true, false, false, true);
+		List<Boolean> expected = list(true, true, true, false, false, true);
 
 		CheckTask.assertTests(inputs, expected, (data, idx) -> ArrayUtil.Generic.equals(data.ary1, data.off1, data.ary2, data.off2, data.len));
 	}
@@ -193,7 +207,7 @@ public final class ArrayUtilTests {
 
 
 	@Test
-	public final void mapTest() {
+	public void mapTest() {
 		String[] res1 = ArrayUtil.map(new Integer[] { 0, 1, 2, 3 }, String.class, (i) -> "+" + (i * 2));
 		Assert.assertArrayEquals(new String[] { "+0", "+2", "+4", "+6" }, res1);
 
@@ -224,11 +238,11 @@ public final class ArrayUtilTests {
 
 	@Test
 	public void orTest() {
-		List<SubArrays<byte[]>> inputs = Arrays.asList(
+		List<SubArrays<byte[]>> inputs = list(
 				new SubArrays<>(bytes(2, 5, 16, 32), 0, bytes(4, 5, 17, 80), 0, 4),
 				new SubArrays<>(bytes(0, 1, 7, 10), 1, bytes(0, 0, 2, 8, 12), 2, 3)
 		);
-		List<byte[]> expected = Arrays.asList(
+		List<byte[]> expected = list(
 				bytes(6, 5, 17, 112),
 				bytes(3, 15, 14)
 		);
@@ -332,6 +346,24 @@ public final class ArrayUtilTests {
 
 	private static int[] ints(int... ints) {
 		return ints;
+	}
+
+
+	@SafeVarargs
+	private static <T> List<T> list(T... ts) {
+		return Arrays.asList(ts);
+	}
+
+
+	@SafeVarargs
+	private static <T> Collection<T> coll(T... ts) {
+		return new LinkedBlockingQueue<T>(Arrays.asList(ts));
+	}
+
+
+	@SafeVarargs
+	private static <T> Iterable<T> iter(T... ts) {
+		return () -> Arrays.asList(ts).iterator();
 	}
 
 }
